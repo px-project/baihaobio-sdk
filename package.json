@@ -8,13 +8,14 @@
     "license": "MIT",
     "scripts": {
         "ncu": "ncu -au && yarn",
-        "test": "NODE_ENV=test mocha -r ts-node/register test/**/*.ts",
+        "test": "NODE_ENV=dev mocha -r ts-node/register test/**/*.ts",
         "build": "rm -r dist; tsc --rootDir src"
     },
     "devDependencies": {
         "@types/chai": "^4.0.6",
+        "@types/isomorphic-fetch": "^0.0.34",
         "@types/mocha": "^2.2.44",
-        "@types/whatwg-fetch": "^0.0.33",
+        "@types/node": "^8.0.53",
         "chai": "^4.1.2",
         "mocha": "^4.0.1",
         "npm-check-updates": "^2.13.0",
@@ -23,6 +24,6 @@
         "typescript": "^2.6.2"
     },
     "dependencies": {
-        "whatwg-fetch": "^2.0.3"
+        "isomorphic-fetch": "^2.2.1"
     }
 }

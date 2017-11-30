@@ -1,7 +1,11 @@
-import { Api, Body, Headers, Method, Methods, Params, Query } from './types';
+import 'isomorphic-fetch';
+import { Api, Body, Env, Headers, Method, Methods, Params, Query, Server } from './types';
 import { Url } from './url';
 
-export interface HttpOptions { }
+export interface HttpOptions {
+    server: Server;
+    apis: any;
+}
 
 export interface FetchOptions {
     api: Api;
@@ -14,17 +18,27 @@ export class Http {
     private _url: Url;
 
     constructor(private _options: HttpOptions) {
-        this._url = new Url({});
+        this._url = new Url({
+            server: _options.server,
+            apis: _options.apis,
+        });
     }
 
-    get(options: FetchOptions) { return this._buildMethod(Methods.GET, options); }
-    post(options: FetchOptions) { return this._buildMethod(Methods.POST, options); }
+    get<T>(options: FetchOptions) { return this._buildMethod<T>(Methods.GET, options); }
+    post<T>(options: FetchOptions) { return this._buildMethod<T>(Methods.POST, options); }
 
-    private _buildMethod(method: Method, options: FetchOptions) {
+    private async _buildMethod<T>(method: Method, options: FetchOptions) {
         const { api, params, query, body } = options;
 
-        const url = this._url.create(api, params, query);
+        const reqInit: RequestInit = { method };
+        if ([Methods.POST].includes(method)) reqInit.body = body;
 
-        return '';
+        const req = new Request(this._url.create(api, params, query), reqInit);
+
+        const res = await fetch(req);
+
+        const json: T = await res.json();
+
+        return { req, res, result: json };
     }
 }

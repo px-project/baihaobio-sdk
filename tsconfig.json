@@ -2,9 +2,6 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "noImplicitAny": true,
         "typeRoots": [
             "node_modules/@types"
         ],
@@ -13,6 +10,13 @@
             "dom"
         ],
         "outDir": "./dist",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
         "declaration": true
     },
     "exclude": [

@@ -1,6 +1,7 @@
 export interface Api {
     path: string;
     desc: string;
+    token?: string;
 }
 
 export type Param = any;
@@ -15,3 +16,10 @@ export const Methods: {[method in Method]: Method } = {
     GET: 'GET',
     POST: 'POST',
 };
+
+export type Env = 'dev' | 'production';
+
+export interface Server {
+    entry: string;
+}
+export type ServerConfig = {[env in Env]: Server};
